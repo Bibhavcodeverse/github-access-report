@@ -1,0 +1,51 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.example:github-access-report >------------------
+[INFO] Building github-access-report 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ github-access-report ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ github-access-report ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 7 source files with javac [debug parameters release 17] to target\classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/BIBHAV KUMAR/Desktop/JAVA PROJECT/github-access-report/src/main/java/com/example/githubaccessreport/client/GithubClient.java:[46,61] cannot find symbol
+  symbol:   method headers()
+  location: variable response of type org.springframework.http.ResponseEntity<java.util.List<T>>
+[ERROR] /C:/Users/BIBHAV KUMAR/Desktop/JAVA PROJECT/github-access-report/src/main/java/com/example/githubaccessreport/client/GithubClient.java:[52,64] cannot find symbol
+  symbol:   method body()
+  location: variable response of type org.springframework.http.ResponseEntity<java.util.List<T>>
+[ERROR] /C:/Users/BIBHAV KUMAR/Desktop/JAVA PROJECT/github-access-report/src/main/java/com/example/githubaccessreport/client/GithubClient.java:[52,90] cannot find symbol
+  symbol:   method body()
+  location: variable response of type org.springframework.http.ResponseEntity<java.util.List<T>>
+[INFO] 3 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.331 s
+[INFO] Finished at: 2026-03-23T18:08:22+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project github-access-report: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/BIBHAV KUMAR/Desktop/JAVA PROJECT/github-access-report/src/main/java/com/example/githubaccessreport/client/GithubClient.java:[46,61] cannot find symbol
+[ERROR]   symbol:   method headers()
+[ERROR]   location: variable response of type org.springframework.http.ResponseEntity<java.util.List<T>>
+[ERROR] /C:/Users/BIBHAV KUMAR/Desktop/JAVA PROJECT/github-access-report/src/main/java/com/example/githubaccessreport/client/GithubClient.java:[52,64] cannot find symbol
+[ERROR]   symbol:   method body()
+[ERROR]   location: variable response of type org.springframework.http.ResponseEntity<java.util.List<T>>
+[ERROR] /C:/Users/BIBHAV KUMAR/Desktop/JAVA PROJECT/github-access-report/src/main/java/com/example/githubaccessreport/client/GithubClient.java:[52,90] cannot find symbol
+[ERROR]   symbol:   method body()
+[ERROR]   location: variable response of type org.springframework.http.ResponseEntity<java.util.List<T>>
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
