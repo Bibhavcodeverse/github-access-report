@@ -55,9 +55,35 @@ The API responds with a JSON object mapping each user to the list of repositorie
 }
 ```
 
-## Assumptions and Design Decisions
+## Notes on implementation
 
-1. **Reactive Programming context:** Used **Spring WebFlux (`WebClient`)** to query the GitHub API asynchronously. Since fetching organization repositories and their individual collaborators can involve many network operations (100+ repos = 100+ API requests), traditional blocking sequential calls would severely degrade performance. WebFlux handles it concurrently.
-2. **Concurrency Limiting:** The code limits flatMap concurrency to `10` simultaneous repository collaborator fetches to ensure we do not hit GitHub's secondary rate limits abruptly.
-3. **Pagination:** GitHub API automatically paginates results (default 30, max 100). The service sets `per_page=100` and recursively traverses the `rel="next"` Link header until all pages of repositories and collaborators are retrieved.
-4. **Error Handling:** If the underlying token does not have access to view a specific repository's collaborators (e.g. returns 404), the `WebClient` swallows the error for that single repository and gracefully continues.
+- Uses GitHub PAT via `Authorization: Bearer <token>`
+- Handles GitHub pagination by reading the `Link` header and following `rel="next"`
+- Uses `per_page=100` to reduce call count
+- Uses Spring WebFlux (`WebClient`) and `flatMap` concurrency limiting to fetch collaborators for repositories in parallel
+  - This avoids fully sequential repo-by-repo collaborator calls
+  - Efficiently scales network I/O without blocking threads and avoids hitting secondary rate limits abruptly
+- Includes basic error handling for:
+  - invalid input (`org` missing)
+  - missing/invalid token
+  - GitHub not found/forbidden cases (e.g. 403/404 on specific repositories)
+  - network failures
+
+## Assumptions made
+
+- PAT has enough permissions to list organization repos and repository collaborators (e.g., `read:org`, `repo`).
+- Private repos/collaborators are only returned if the token has the proper scopes.
+- Current version fetches all repos in the org and then all collaborators per repo.
+- The same collaborator can appear in many repositories; the response groups and maps repository access roles per user.
+
+## Scaling and optimization approach
+
+Current project handles scaling in a practical way:
+1. Pagination support for large organizations/repositories.
+2. `per_page=100` to reduce total requests.
+3. Parallel collaborator fetch calls across repositories using reactive streams to reduce total wall-clock time.
+
+If org size grows significantly, next improvements would typically be:
+1. Add short-term caching for report responses to avoid re-fetching identical data frequently.
+2. Add rate-limit aware retry/backoff mechanisms (e.g. parsing `X-RateLimit-Reset`).
+3. Persist snapshots in a database for historical reporting.
